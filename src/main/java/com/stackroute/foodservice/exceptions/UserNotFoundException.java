@@ -8,6 +8,6 @@ public class UserNotFoundException extends Exception {
 
     public UserNotFoundException(String message) {
         super(message);
-        this.message=message;
+        this.message = message;
     }
 }

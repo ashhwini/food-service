@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1") @Api(value="foodservice", description="Operations pertaining to restaurant details")
+@RequestMapping("/api/v1")
+@Api(value = "foodservice", description = "Operations pertaining to restaurant details")
 public class CustomerController {
 
     private CustomerService customerService;
@@ -25,38 +26,38 @@ public class CustomerController {
     }
 
     @PostMapping("/customer")
-    public ResponseEntity<Customer> saveUser(@RequestBody Customer customer) throws UserAlreadyExistsException{
+    public ResponseEntity<Customer> saveRestaurant(@RequestBody Customer customer) throws UserAlreadyExistsException {
         ResponseEntity responseEntity;
-            customerService.addRestaurants(customer);
-            responseEntity = new ResponseEntity<String>("Sucessfully created",HttpStatus.CREATED);
-            return responseEntity;
+        customerService.addRestaurants(customer);
+        responseEntity = new ResponseEntity<String>("Sucessfully created", HttpStatus.CREATED);
+        return responseEntity;
     }
 
     @GetMapping("/customers")
-    public ResponseEntity<List<Customer>> getAllUsers(@RequestBody Customer user){
-        return new ResponseEntity<List<Customer>>(customerService.getAllRestaurants(),HttpStatus.OK);
+    public ResponseEntity<List<Customer>> getAllRestaurant(@RequestBody Customer user) {
+        return new ResponseEntity<List<Customer>>(customerService.getAllRestaurants(), HttpStatus.OK);
     }
 
     @GetMapping("/customer/{id}")
-    public ResponseEntity<Optional<Customer>> getUserById(@PathVariable int id) {
-        return new ResponseEntity<Optional<Customer>>(customerService.getRestaurantById(id),HttpStatus.OK);
+    public ResponseEntity<Optional<Customer>> getRestaurantById(@PathVariable int id) {
+        return new ResponseEntity<Optional<Customer>>(customerService.getRestaurantById(id), HttpStatus.FOUND);
     }
 
     @GetMapping("/customers/{name}")
-    public ResponseEntity<List<Customer>> getUserByName(@PathVariable String name) throws UserNotFoundException{
-            ResponseEntity responseEntity;
-            responseEntity = new ResponseEntity<List<Customer>>(customerService.getRestaurantByName(name), HttpStatus.CREATED);
-            return responseEntity;
-       // return new ResponseEntity<List<Customer>>(customerService.getRestaurantByName(name),HttpStatus.OK);
+    public ResponseEntity<List<Customer>> getRestaurantByName(@PathVariable String name) throws UserNotFoundException {
+        ResponseEntity responseEntity;
+        responseEntity = new ResponseEntity<List<Customer>>(customerService.getRestaurantByName(name), HttpStatus.FOUND);
+        return responseEntity;
     }
+
     @PutMapping("/customer/{id}")
-    public ResponseEntity<Customer> updateUser(@PathVariable int id,@RequestBody Customer customer){
-        Customer updateUser = customerService.updateRestaurant(customer,id);
-        return new ResponseEntity<Customer>(updateUser,HttpStatus.OK);
+    public ResponseEntity<Customer> updateRestaurantDetails(@PathVariable int id, @RequestBody Customer customer) {
+        Customer updateUser = customerService.updateRestaurant(customer, id);
+        return new ResponseEntity<Customer>(updateUser, HttpStatus.OK);
     }
+
     @DeleteMapping("/customer/{id}")
-    public void deleteUserById(@PathVariable int id)
-    {
+    public void deleteRestaurantById(@PathVariable int id) {
         customerService.deleteRestaurantById(id);
     }
 

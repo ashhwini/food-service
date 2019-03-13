@@ -1,4 +1,8 @@
 package com.stackroute.foodservice.service;
+/*
+Here those CRUD operations are implemented.
+Each customer or app-user can fetch details of different restaurants from his account
+ */
 
 import com.stackroute.foodservice.domain.Customer;
 import com.stackroute.foodservice.exceptions.UserAlreadyExistsException;
@@ -26,13 +30,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer addRestaurants(Customer customer) throws UserAlreadyExistsException {
 
-        if(customerRepository.existsById(customer.getRestaurantId()))
-        {
+        if (customerRepository.existsById(customer.getRestaurantId())) {
             throw new UserAlreadyExistsException("User Already Exists");
         }
         Customer savedRestaurant = customerRepository.save(customer);
-        if(savedRestaurant == null)
-        {
+        if (savedRestaurant == null) {
             throw new UserAlreadyExistsException("User Already Exists");
         }
         return savedRestaurant;
@@ -40,7 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Customer> getAllRestaurants() {
-      return (List<Customer>) customerRepository.findAll();
+        return (List<Customer>) customerRepository.findAll();
     }
 
     @Override
@@ -51,7 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer updateRestaurant(Customer customer, int id) {
         customer.setRestaurantId(id);
-        Customer updateUser =  customerRepository.save(customer);
+        Customer updateUser = customerRepository.save(customer);
         return updateUser;
     }
 
@@ -62,11 +64,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Customer> getRestaurantByName(String name) throws UserNotFoundException {
-        List<Customer> restaurantname = customerRepository.findByName(name);
-        if(restaurantname.isEmpty())
-        {
+        List<Customer> restaurant = customerRepository.findByName(name);
+        if (restaurant.isEmpty()) {
             throw new UserNotFoundException("User Not Found");
         }
-        return restaurantname;
+        return restaurant;
     }
 }

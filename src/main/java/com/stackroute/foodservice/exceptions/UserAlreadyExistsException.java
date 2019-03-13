@@ -1,6 +1,6 @@
 package com.stackroute.foodservice.exceptions;
 
-public class UserAlreadyExistsException extends Exception{
+public class UserAlreadyExistsException extends Exception {
 
     private String message;
 
@@ -9,6 +9,6 @@ public class UserAlreadyExistsException extends Exception{
 
     public UserAlreadyExistsException(String message) {
         super(message);
-        this.message=message;
+        this.message = message;
     }
 }

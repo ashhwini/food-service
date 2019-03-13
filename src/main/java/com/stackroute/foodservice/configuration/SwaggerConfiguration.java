@@ -1,4 +1,7 @@
 package com.stackroute.foodservice.configuration;
+/*
+Generate API documentation using Swagger 2
+ */
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,11 +20,12 @@ public class SwaggerConfiguration {
     @Bean
     public Docket foodApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .select()                 .apis(RequestHandlerSelectors.basePackage("com.stackroute.foodservice"))
+                .select().apis(RequestHandlerSelectors.basePackage("com.stackroute.foodservice"))
                 .paths(regex("/api/v1.*"))
                 .build()
                 .apiInfo(metaData());
     }
+
     private ApiInfo metaData() {
         ApiInfo apiInfo = new ApiInfo(
                 "Spring Boot REST API",
