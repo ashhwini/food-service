@@ -1,6 +1,8 @@
 package com.stackroute.foodservice.service;
 
 import com.stackroute.foodservice.domain.Customer;
+import com.stackroute.foodservice.exceptions.UserAlreadyExistsException;
+import com.stackroute.foodservice.exceptions.UserNotFoundException;
 import com.stackroute.foodservice.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +24,17 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer addRestaurants(Customer customer) {
+    public Customer addRestaurants(Customer customer) throws UserAlreadyExistsException {
+
+        if(customerRepository.existsById(customer.getRestaurantId()))
+        {
+            throw new UserAlreadyExistsException("User Already Exists");
+        }
         Customer savedRestaurant = customerRepository.save(customer);
+        if(savedRestaurant == null)
+        {
+            throw new UserAlreadyExistsException("User Already Exists");
+        }
         return savedRestaurant;
     }
 
@@ -49,4 +60,13 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.deleteById(id);
     }
 
+    @Override
+    public List<Customer> getRestaurantByName(String name) throws UserNotFoundException {
+        List<Customer> restaurantname = customerRepository.findByName(name);
+        if(restaurantname.isEmpty())
+        {
+            throw new UserNotFoundException("User Not Found");
+        }
+        return restaurantname;
+    }
 }
